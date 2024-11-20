@@ -9,12 +9,12 @@ const schema = v.object().shape({
     innerObj: {
       num: v.number(),
       deepestObj: {
-        num: v.number()
-      }
-    }
-  }
+        num: v.number(),
+      },
+    },
+  },
 });
 
-schema.isValid({ num: 54, obj: { array: [1, 2], innerObj: { num: 2, deepestObj: { num: 5 }}} }); // true
+schema.isValid({ num: 54, obj: { array: [1, 2], innerObj: { num: 2, deepestObj: { num: 5 } } } }); // true
 
 export default Validator;
