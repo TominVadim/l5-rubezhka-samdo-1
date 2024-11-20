@@ -21,8 +21,16 @@ class ObjectValidator {
   // Метод для проверки валидности объекта пользователя
   isValid(obj) {
     // Итерируемся по каждому свойству объекта и проверяем его валидность
-    return Object.entries(obj)
-      .reduce((acc, [key, value]) => acc && this.options[key].isValid(value), true);
+    return Object.entries(this.options).every(([key, validator]) => {
+
+      const value = obj[key];
+
+      if (typeof value === 'object' && (!Array.isArray(value))) {
+        return (new this.constructor()).shape(validator).isValid(value);
+      } else {
+        return validator.isValid(value);
+      }
+    })
     // acc - аккумулятор, который хранит результат проверки
     // Если все проверки пройдены, возвращается true
   }
